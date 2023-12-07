@@ -1,0 +1,62 @@
+#+TITLE: From a Dictionary to a Class
+#+OPTIONS: num:nil
+#+PROPERTY: header-args:python :session dtc :results value verbatim :exports both
+
+In Python, we are familiar with =type= to check the type of an object.
+
+#+begin_src python :results scalar
+(type(42), type([1,2,3]), type({'a': 33}))
+#+end_src
+
+#+RESULTS:
+: (int, list, dict)
+
+
+However =type= can also be used to generate a new type from its arguments. It's
+signature is =type(name, bases, namespace)=, where
+- =name= :: is the name of the new type (or class),
+- =bases= :: are its superclasses,
+- =namespace= :: is a dictionary describing the class's variables and methods.
+
+Here is an example using the usual =class= declarations.
+
+#+begin_src python :results none
+class MySuperClass:
+    pass
+
+
+class MyMixin:
+    pass
+
+
+class MyClass(MySuperClass, MyMixin):
+    x = 42
+
+    def x2(self):
+        return self.x * 2
+#+end_src
+
+Here =MyClass= is a subclass of both =MySuperClass= and =MyMixin=. It has a
+class variable called =x= which has the value of =42= and a method =x2= which
+takes no arguments and returns the square of =x=.
+
+The definition of =MySuperClass= could also have been carried out by the
+following call to =type=.
+
+#+begin_src python :results none
+MyClass = type(
+    "MyClass",
+    (MySuperClass, MyMixin),
+    {"x": 42, "x2": lambda self: self.x * 2},
+)
+#+end_src
+
+Now we can do, for example
+
+#+begin_src python
+mc = MyClass()
+mc.x
+#+end_src
+
+#+RESULTS:
+: 42

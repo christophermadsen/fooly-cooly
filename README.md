@@ -1,3 +1,3 @@
-**A collection of my unsorted notes. Let's find order through chaos.** <br>
+**A collection of my unsorted notes, order in chaos** <br>
 <br>
 *fooly cooly*

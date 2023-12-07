@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       f3e18f23-f356-4de2-8549-10b470635351
+:END:
+#+title: Focal Loss
+#+filetags: :loss:classification:imbalanced:
+
+* Focal Loss
+
+https://maxhalford.github.io/blog/lightgbm-focal-loss/

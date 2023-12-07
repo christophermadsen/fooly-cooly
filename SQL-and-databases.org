@@ -1,0 +1,463 @@
+:PROPERTIES:
+:ID:       9d27a9b2-6e65-414a-9b12-216e6c78dec6
+:END:
+#+TITLE: SQL and Relational Databases
+#+filetags: :structured query language:SQL:relational databases:
+#+STARTUP: show2levels
+
+* Introduction
+
+Structured Query Language (SQL) is a language designed for querying databases.
+There are many different ones, but in these notes I'll focus on /common SQL/.
+
+* Useful Links
+
++ For a _complete walk-through_: https://sqlbolt.com/lesson/introduction
++ For a _syntax tutorial_: https://www.codecademy.com/learn/learn-sql
+  : (Login with google account)
++ For _miscellaneous exercises_: https://www.hackerrank.com/domains/sql
+  : (Login with google account)
+
+* Relational Databases
+
+Relational databases contain two-dimensional tables consisting of /columns/ and
+/rows/, analogous to two-dimensional matrices and arrays in math and programming.
+Here the columns are identified with individual names.
+
+A /primary key/ usually denotes the ID or index of the database table.
++ https://www.tutorialspoint.com/sql/sql-primary-key.htm
++ ( [[*Common Table Column Constraints][Common Table Column Constraints]] )
+
+* General SQL
+
+Queries generally consist of a ~SELECT~ statement specifying what is desired,
+followed by a ~FROM~ statement specifying from where something is desired
+(usually a table or a joining of tables).
+
+We can easily select all columns of an arbitrary 'recipes' table with ~*~.
+
+#+begin_example sql
+SELECT *
+FROM recipes;
+#+end_example
+
+Specific columns can also be selected from the table.
+
+#+begin_example sql
+SELECT type, ingredient1, spice1
+FROM recipes;
+#+end_example
+
+** Constraints with WHERE, Operators and Conditionals
+
+A ~WHERE~ statement can be added to filter the table for specifics.
+
+#+begin_example sql
+SELECT type, ingredient1, spice1
+FROM recipes
+WHERE ingredient1 = "Red Capsicum";
+
+SELECT ingredient1
+FROM recipes
+WHERE type = "Curry"
+    OR ingredient1 = "Red Capsicum"
+    AND herb1 != "Coriander"
+    AND N_ingredients BETWEEN 5 AND 8;
+#+end_example
+
++ Note that in the example above, we have 2 queries, this is possible by
+  closing each query with a semi-colon (~;~).
+
+- Operator examples :: ~NOT~, ~AND~, ~OR~, ~XOR~, ~BETWEEN~ and ~IN~
+- Conditional examples :: ~=~, ~!=~, ~<~, ~>~, ~<=~ and ~>=~
+
++ ~IN~ can be used to test if the value is in a list of other values.
++ ~LIKE~ and ~%~ can be used to search and match strings in a database column. The ~%~ operator matches what is written before or after.
+
+To find all colored capsicums or all red ingredients in an arbitrary
+=ingredient1= column
+#+begin_example sql
+SELECT *
+FROM recipes
+WHERE ingredient1 LIKE "%capsicum"
+    OR ingredient1 LIKE "red%";
+#+end_example
+
+** Filtering and Sorting
+
+~DISTINCT~ can be used to drop duplicate values from a column
+
+#+begin_example sql
+SELECT DISTINCT ingredient1, spice1
+FROM recipes;
+#+end_example
+
+~ORDER BY~ can be used to sort by columns ordered both ~ASC~ and ~DESC~.
+
+#+begin_example sql
+SELECT *
+FROM recipes
+WHERE spice1 LIKE "%pepper"
+ORDER BY ingredient1 ASC;
+#+end_example
+
+~LIMIT~ can be used to only keep a specified number of rows and ~OFFSET~ will
+specify where to begin counting from with ~LIMIT~.
+
+#+begin_example sql
+SELECT *
+FROM recipes
+LIMIT 5;
+
+SELECT *
+from recipes
+LIMIT 5 OFFSET 20;
+#+end_example
+
+** NULL
+
+Certain functions behave differently with ~NULL~ values. As an alternative it's
+also possible to use _0_ for numerical data and empty string =""= for text data.
+
+To filter out the rows with NULL in a specific column
+#+begin_example sql
+SELECT *
+FROM recipes
+WHERE vegetarian IS NOT NULL;
+    AND pescetarian IS NOT NULL;
+#+end_example
+
+
+* Multi-table Queries (JOIN)
+
+Real world data is often structured in several tables within a database. This
+is called database /normalization/. It allows tables to grow independently
+without duplicating values in outher columns if they were in the same table.
+
+With the ~JOIN~ statement it is possible to join tables together when using
+~FROM~ after ~SELECT~. See figure below for a simple illustrated example.
+
+#+NAME: fig:sqljoin
+#+CAPTION: Types of join with SQL
+#+ATTR_ORG: :width 700
+[[file:figures/SQL_Joins.png]]
+
+
+If we have 2 tables, 'recipes' and 'ingredients' whe can make a ~INNER JOIN~ statement
+like so:
+#+begin_example sql
+SELECT vegetarian, ingredient1, ingredient2
+FROM recipes
+JOIN ingredients
+    ON recipes.id = ingredients.recipe_id;
+#+end_example
+
++ In the SQL the ~INNER JOIN~ is synonymous with using just ~JOIN~.
++ ~LEFT~, ~RIGHT~ and ~FULL JOIN~ are called the same way as ~INNER JOIN~.
++ The ~id~ column in the ~recipes~ would be the /Primary Key/ and the
+  equivalent ~recipe_id~ column in the ~ingredients~ table would be the /Foreign
+  Key/. This kind of key-pair is always needed when joining tables.
+
+*Clarification of the different JOINs*
+- INNER JOIN :: Keeps the rows where the key pair match.
+- LEFT JOIN :: Keeps the rows where the key pairr match, but also all rows in
+  the first table, leaving column values empty (~NULL~) where the key for the
+  second table does not match.
+- RIGHT JOIN :: Same as the ~LEFT JOIN~, but the other way around.
+- FULL JOIN :: Is the combination of ~LEFT JOIN~ and ~RIGHT JOIN~.
+
+** Using Unions
+
+It is not common to use a ~UNION~ statement similar to set theory operations, but
+it is possible AND useful when it is not convenient to ~JOIN~ tables together.
+
+The ~UNION~ syntax takes on a form something like the following
+#+begin_example sql
+SELECT column, another_column
+   FROM mytable
+UNION / UNION ALL / INTERSECT / EXCEPT
+SELECT other_column, yet_another_column
+   FROM another_table
+ORDER BY column DESC
+LIMIT n;
+#+end_example
+
+- UNION ALL :: All rows are added to the first table, assuming that the column
+  count and their datatypes are the same.
+- UNION :: The same as ~UNION ALL~ but duplicate rows are dropped.
+- INTERSECT :: Only rows that are identical between the 2 tables are kept.
+- EXCEPT :: Only the rows that are in the first table and aren't in the second
+  table are kept.
+
+* Expressions and Aggregates
+
+When using ~SELECT~ it's possible to manipulate the output with expressions.
+
+#+begin_example sql
+SELECT N_ingredients / recipe_price AS relative_price
+FROM recipes
+WHERE (N_ingredients / recipe_price) <= 5.0;
+#+end_example
+
++ The ~AS~ keyword defines an alias for the expression in the ~SELECT~ statement,
+  displayed as the column name. ~AS~ can also be used for just changing the
+  column name and can be used in the ~FROM~ statement the same way.
++ Each database type has its own supported set of mathematical, string and
+  datetime functions that can be used in a query, som common mathematical
+  operators are ~+~, ~-~, ~*~, ~/~ and ~%~.
+
+It's also possible to aggregate and group the data.
+
+To get the AVG price of recipes grouped per ingredient.
+#+begin_example sql
+SELECT recipe, N_ingredients, AVG(recipe_price)
+FROM recipes
+GROUP BY N_ingredients;
+#+end_example
+
++ If the ~GROUP BY~ statement is not used the query would become the average of
+  all recipe_price, instead of the average per N_ingredients.
++ Just like expressions, each database type has its own supported set of
+  aggregate functions, some common keywords are ~AVG()~, ~MAX()~, ~MIN()~, ~SUM()~ and
+  ~COUNT()~.
+
+If we want to filter rows like we do with ~WHERE~ after we perform a grouping, we
+can instead use the ~HAVING~ statement. It works the same way as ~WHERE~ but is
+performed on the grouped data.
+
+#+begin_example sql
+SELECT recipe, N_ingredients, AVG(recipe_price)
+FROM recipes
+GROUP BY N_ingredients
+HAVING N_ingredients > 2;
+#+end_example
+
+* Subqueries
+
+Often a single query is not enough to get the answer that is sought, this can
+be fixed by adding subqueries in the query.
+
+#+begin_example sql
+SELECT *
+FROM recipes
+WHERE N_ingredients >
+    (SELECT AVG(N_ingredients)
+    FROM recipes);
+#+end_example
+
++ A subquery like that can be referenced anywhere a normal table or query would
+  be reference, inside ~FROM~, ~JOIN~, ~UNION~, ~WHERE~, ~HAVING~ and even another
+  ~SELECT~.
++ A subquery must be fully enclosed by arentheses =()=
+
+  A powerful type of queries is a /correlated subquery/ where a subquery depends
+  on a column or alias from an outer query.
+
++ A /correlated subquery/ is a subquery that uses values from the outer query. It
+  is powerful because it allows for more detailed queries, but may be slow
+  since a correlated subquery may need to be executed per row in the overall
+  query. Correlated subqueries work in the ~SELECT~ and ~WHERE~ statements, but
+  not in the ~FROM~ statement.
+
+Selecting name and recipe_price from recipes where the recipe_price is above
+the average recipe_price given N_ingredients.
+#+begin_example sql
+SELECT name, recipe_price
+FROM recipes AS rec
+WHERE recipe_price > (
+    SELECT AVG(recipe_price)
+        FROM recipes
+        WHERE N_ingredients = rec.N_ingredients);
+#+end_example
+
+Selecting name, recipe_price and the avg recipe_price per N_ingredients.
+#+begin_example sql
+SELECT name, recipe_price, SELECT(
+    AVG(recipe_price)
+    FROM recipes
+    WHERE N_ingredients = rec.N_ingredients) AS N_ingredient_price_avg
+FROM recipes AS rec
+#+end_example
+
++ In subquery can also be used with the ~WHERE ... IN~ statement
+
+#+begin_example sql
+SELECT ...
+FROM mytable
+WHERE column
+    IN/NOT IN (SELECT another_column
+               FROM another_table);
+#+end_example
+
+
+* Statement Order
+
+*Correct execution order of SQL statements*
+1. SELECT DISTINCT column, AGG_FUNC(column_or_expression), …
+2. FROM mytable
+3.    JOIN another_table
+4.        ON mytable.column = another_table.column
+5.    WHERE constraint_expression
+6.    GROUP BY column
+7.    HAVING constraint_expression
+8.    ORDER BY column ASC/DESC
+9.    LIMIT count OFFSET COUNT;
+
+* Creating Tables
+
+When it is worth creating a new table, the syntax for the ~CREATE TABLE~
+statement with optional table constraints and default values, looks something
+like
+
+#+begin_example sql
+CREATE TABLE IF NOT EXISTS mytable (
+    column DataType TableConstraint DEFAULT default_value,
+    another_column DataType TableConstraint DEFAULT default_value,
+    . . .
+);
+#+end_example
+
+#+begin_example sql
+CREATE TABLE IF NOT EXISTS recipes (
+    id INTEGER PRIMARY KEY,
+    name TEXT DEFAULT "A New Recipe",
+    N_ingredients INTEGER DEFAULT 0,
+    recipe_price FLOAT,
+    contains_coriander BOOLEAN
+)
+#+end_example
+
+** Common Table Column Datatypes
+
+- =INTEGER= :: Self-explanatory.
+- =BOOLEAN= :: Self-explanatory.
+- =FLOAT=, =DOUBLE=, =REAL= :: Different types can be used depending on the floating
+  point precision required for that value.
+- =TEXT=, =CHARACTER(number_of_character)=, =VARCHAR(number_of_characters)= :: The
+  text based datatypes can store strings and text in all sorts of locales. The
+  distinction between the various types generally amount to underlaying
+  efficiency of the database when working with these columns. Both the
+  =CHARACTER= and =VARCHAR= (variable character) types are specified with the max
+  number of characters that they can store (longer values may be truncated), so
+  can be more efficient to store and query with big tables.
+
+- =DATE=, =DATETIME= :: Self-explanatory
+- =BLOB= :: SQL can store binary data in blobs right in the database. These
+  values are often opaque to the database, so you usually have to store them
+  with the right metadata to requery them.
+
+** Common Table Column Constraints
+
+- =PRIMARY KEY= :: This means that the values in this column are unique, and each
+  value can be used to identify a single row in this table.
+- =AUTOINCREMENT= :: For integer values, this means that the value is
+  automatically filled in and incremented with each row insertion. Not
+  supported in all databases.
+- =UNIQUE= :: Self-explanatory.
+- =NOT NULL= :: Self-explanatory.
+- =CHECK (expression)= :: This allows you to run a more complex expression to
+  test whether the values inserted are valid. For example, you can check that
+  values are positive, or greater than a specific size, or start with a certain
+  prefix, etc.
+- =FOREIGN KEY= :: This is a consistency check which ensures that each value in
+  this column corresponds to another value in a column in another table. For
+  example, if there are two tables, one listing all Employees by ID, and
+  another listing their payroll information, the =FOREIGN KEY= can ensure that
+  every row in the payroll table corresponds to a valid employee in the master
+  Employee list.
+
+* Manipulating Tables
+
+** Inserting, Updating and Deleting Table Rows.
+
+A /database schema/ describes the structure of the table and the datatypes of
+each column in a table may contain. This fixed structure allows databases to be
+efficient and consistent.
+
+To insert new data into a table the ~INSERT INTO~ statement can be used together
+with the ~VALUES~ keyword.
+
+#+begin_example sql
+INSERT INTO recipes
+VALUES ("Ketchup", 3, 5.0);
+
+INSERT INTO recipes
+(name, recipe_price)
+VALUES ("Chcknn Katsu", 20.0),
+    ("Coleslaw", 4.5),
+    ("Lemon Lemonade", 2.0);
+#+end_example
+
++ Note that the 2nd query in the example will work if the table supports a
+  default values for non-specified columns and values.
++ It's also possible to use any [[*Expressions and Aggregates][expressions]] needed in the values added with the
+  ~VALUES~ keyword.
+
+Rather than inserting data it is also possible to update existing data with the
+~UPDATE~ statement and the ~SET~ keyword.
+
+#+begin_example sql
+UPDATE recipes
+SET name = "Chicken Katsu",
+    recipe_price = 6.0
+WHERE name = "Chcknn Katsu";
+#+end_example
+
+It is also possible to delete rows with the ~DELETE FROM~ statement.
+
+#+begin_example sql
+DELETE FROM recipes
+WHERE name = "Lemon Lemonade";
+#+end_example
+
+: WARNING!
+The ~UPDATE~ and ~DELETE~ statements are *PERMANENT*. *Try out* the query within a
+~SELECT~ query *first* before applying it to a table/database.
+
+** Altering Tables
+
+It is possible to alter a created table schema within a database with the
+~ALTER TABLE~ statement.
+
+Adding columns
+#+begin_example sql
+ALTER TABLE recipes
+ADD cooking_time FLOAT CHECK (cooking_time > 0.0);
+#+end_example
+
+Removing columns
+#+begin_example sql
+ALTER TABLE recipes
+DROP cooking_time;
+#+end_example
+
+: WARNING!
+The ~DROP~ Keyword is *PERMANENT*. *Try out* the query within a ~SELECT~ query *first*
+before applying it to a table/database.
+
+Renaming columns with the ~RENAME TO~ keywords.
+#+begin_example sql
+ALTER TABLE recipes
+RENAME TO vegetarian_recipes;
+#+end_example
+
+** Dropping Tables
+
+It is of course also possible to drop a table in the database entirely. This
+can be achieved with the ~DROP TABLE~ statement and optional ~IF EXISTS~ keywords.
+
+: WARNING!
+This is obviously a *PERMANENT* action and should be _used with care_.
+
+#+begin_example sql
+DROP TABLE IF EXISTS non_edible_recipes;
+#+end_example
+
+If another table has a =FOREIGN KEY= dependency then all dependent tables need to
+be subsequently updated.
+
+* Closing Notes
+
++ These are common SQL statements and methods, but not all SQL version make use
+  of all of these. It is best to check which type of SQL (if any) the database
+  type in question actually uses.

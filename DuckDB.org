@@ -1,0 +1,38 @@
+:PROPERTIES:
+:ID:       af553320-4534-4196-9a75-f8315bb7ec4d
+:END:
+#+title: DuckDB
+#+filetags: :DuckDB:databases:SQL:
+
+* DuckDB
+
++ DuckDB is configured for [[https://en.wikipedia.org/wiki/Online_analytical_processing#:~:text=Online%20analytical%20processing%2C%20or%20OLAP,report%20writing%20and%20data%20mining.][OLAP]], meaning it's suited well for data analytics
+  and larger queries. There's a chance it doesn't beat [[https://en.wikipedia.org/wiki/Online_transaction_processing][OLTP]] databases on
+  smaller queries, but it is hard to beat on larger queries.
++ DuckDB is _column oriented_.
++ Built with _C_ and builds on the SQLite philosophy.
++
++ Works very well with _Pandas_ and can directly ingest DataFrames, csv and
+  _parquet_ files.
++ Provides its own features in an extended SQL based.
++ Can fetch queries directly as DataFrames or Ndarray
++ Stores a database as a _single cross-platform file_.
+
+
+
+** Neat DuckDB
+
+DuckDB offers some neat [[id:9d27a9b2-6e65-414a-9b12-216e6c78dec6][SQL]] that can be very useful in certain cases.
+
+Selecting all columns, but excluding /some/.
+#+begin_example sql
+SELECT * EXCLUDE (jar_jar_binks, midichlorians) FROM star_wars
+#+end_example
+
+Selecting all columns, but excluding /some/ for multiple tables.
+#+begin_example sql
+SELECT
+    sw.* EXCLUDE (jar_jar_binks, midichlorians),
+    ff.* EXCLUDE cancellation
+FROM star_wars sw, firefly ff
+#+end_example

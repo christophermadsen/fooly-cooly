@@ -1,0 +1,130 @@
+#+TITLE: How to Easily Handle a Shared Figure Directory in Emacs + Python
+#+AUTHOR: Christopher Buch Madsen | Machine Learning Programs
+#+EMAIL: christopher.madsen@mlprograms.com
+#+DATE: Thursday, 2 February 2023
+#+STARTUP: showall
+#+PROPERTY: header-args :exports both :session figdir :kernel ogi_products :cache no
+:PROPERTIES:
+#+OPTIONS: ^:nil
+#+LATEX_COMPILER: xelatex
+#+LATEX_CLASS: mlpdoc
+#+LATEX_CLASS_OPTIONS: [logo, color, author]
+#+LATEX_HEADER: \headertitle{Change to your desired header}
+#+LATEX_HEADER: \insertauthor
+#+LATEX_HEADER: \versiondoc{v0.1 - November 19, 2020}
+#+LATEX_HEADER: \usepackage{minted}
+#+LATEX_HEADER: \setminted{bgcolor=WhiteSmoke}
+:END:
+
+* Introduction
+In Emacs it's possible to use header arguments and a little bit of emacs-lisp
+to make it easier to handle figure paths and displaying them at the same time
+so anyone reading a narrative is able to view the figures without having to
+generate them and without you having to constantly write the same path again
+and again.
+
+This of course only works if the paths for the figures actually exist, so make
+sure to put them somewhere your colleague have access to, and make sure to use
+well-defined paths. Your best bet is always to store them in your own directory
+on =~/scratch=.
+
+* Imports
+:PROPERTIES:
+:visibility: folded
+:END:
+
+#+begin_src python :results silent
+from pathlib import Path
+import matplotlib.pyplot as plt
+#+end_src
+
+* Working Example (How To)
+In this example we only work with a single path pointing to the directory where
+we want to store our figures.
+
+We first make an emacs-lisp codeblock print an output, which should be the
+string of the path we want to use.
+
+#+name: figuredir
+#+begin_src emacs-lisp
+(print "~/scratch/chris/figures")
+#+end_src
+
+#+RESULTS: figuredir
+: ~/scratch/chris/figures
+
+In emacs-lisp we can then ask to retrieve the output of this codeblock and use
+it in Python. Please see the header of the codeblock below.
+
+#+begin_src python :var path=(org-sbe figuredir)
+FIGURE_DIR = Path(path).expanduser()
+print(FIGURE_DIR)
+#+end_src
+
+So what's happening in that header? With ~(org-se)
+
+
+Instead of using ~plt.savefig~ we want to save and point directly to the file
+with the ~:file~ header for org codeblocks. This way we don't need to save the
+figure in Python and then link to the figure with
+~[[file:path/to/your/figure.png]]~ for people to be able to view the figure
+without generating it.
+
+#+begin_src python :file (format "%s/checkblockresult.png" (org-sbe figuredir))
+fig, ax = plt.subplots(1, 1, figsize=(7, 7))
+ax.plot([1, 2, 3, 3, 4, 5, 5, 6])
+plt.show()
+#+end_src
+
+#+RESULTS:
+[[file:~/scratch/chris/figures/checkblockresult.png]]
+
+* Extended Example (Usecase for the MLPS Training Template)
+In the MLPS training template, at the time of writing, we use a lot of paths
+and for the figures we manually copy their paths every time or use
+~plt.savefig~ with the Python defined global variable to the figure directory.
+To circumvent duplicate paths we can circumvent this with an extra emacs-lisp
+codeblock.
+
+#+name: datadir
+#+begin_src emacs-lisp
+(print "~/scratch/chris")
+#+end_src
+
+#+RESULTS: datadir
+: ~/scratch/chris
+
+#+name: figuredirB
+#+begin_src emacs-lisp
+(print (format "%s/figures" (org-sbe datadir)))
+#+end_src
+
+#+RESULTS: figuredirB
+: ~/scratch/chris/figures
+
+#+begin_src python :var path1=(org-sbe datadir) :var path2=(org-sbe figuredirB)
+DATA_DIR = Path(path1).expanduser()
+FIGURE_DIR = Path(path2).expanduser()
+print(DATA_DIR)
+print(FIGURE_DIR)
+#+end_src
+
+#+RESULTS:
+: /home/chris/scratch/chris
+: /home/chris/scratch/chris/figures
+
+#+begin_src python :file (format "%s/checkblockresult2.png" (org-sbe figuredirB))
+fig, ax = plt.subplots(1, 1, figsize=(7, 7))
+ax.plot([6, 5, 5, 4, 3, 3, 2, 1])
+plt.show()
+#+end_src
+
+#+RESULTS:
+[[file:~/scratch/chris/figures/checkblockresult2.png]]
+
+
+As you can see, this way we can just continue intermingling the header
+variables and the Python paths as we please, and the only thing we need to copy
+and modify every time is the ~(format "%s/checkblockresult.png" (org-sbe
+figuredirB))~ header where we change the figure name after the ~%s/~ in the
+format string.
