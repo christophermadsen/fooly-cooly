@@ -1,0 +1,14 @@
+:PROPERTIES:
+:ID:       53d79335-0c1c-4648-b674-f9ec9da0266d
+:END:
+#+title: py-isort on windows
+#+filetags: :isort:org-mode:emacs:
+
+The Emacs package 'py-isort' on MELPA is pretty useful for automatically
+sorting and cleaning up python imports.
+https://melpa.org/#/py-isort
+
+Within the .el file they provide there is a call to the 'diff' command. This
+isn't available on Windows, so we can simply change the call to "diff" to "FC"
+instead, which is the Windows equivalent. Open the py-isort.el file and do
+this.

@@ -127,7 +127,6 @@ WHERE vegetarian IS NOT NULL;
     AND pescetarian IS NOT NULL;
 #+end_example
 
-
 * Multi-table Queries (JOIN)
 
 Real world data is often structured in several tables within a database. This
@@ -160,7 +159,7 @@ JOIN ingredients
 
 *Clarification of the different JOINs*
 - INNER JOIN :: Keeps the rows where the key pair match.
-- LEFT JOIN :: Keeps the rows where the key pairr match, but also all rows in
+- LEFT JOIN :: Keeps the rows where the key pair match, but also all rows in
   the first table, leaving column values empty (~NULL~) where the key for the
   second table does not match.
 - RIGHT JOIN :: Same as the ~LEFT JOIN~, but the other way around.
@@ -288,7 +287,6 @@ WHERE column
     IN/NOT IN (SELECT another_column
                FROM another_table);
 #+end_example
-
 
 * Statement Order
 

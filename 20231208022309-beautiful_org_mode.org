@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       95e891ba-806a-4e62-96c3-2cfed5c7c0ea
+:END:
+#+title: beautiful org mode
+#+filetags: :style:emacs:beautiful:org-mode:
+
+The best part of org-mode is that it's all plaintext, but plaintext can also
+look good.
+
+https://blog.tecosaur.com/tmio/2022-05-31-folding.html

@@ -1,0 +1,9 @@
+:PROPERTIES:
+:ID:       bae93314-3a7a-42df-89c8-d427d2bfa68d
+:END:
+#+title: org mode to ipynb
+#+filetags: :export:ipynb:org-mode:jupyter:
+
+https://necromuralist.github.io/posts/org-to-jupyter-notebook/
+https://kitchingroup.cheme.cmu.edu/blog/2017/01/21/Exporting-org-mode-to-Jupyter-notebooks/
+https://github.com/jkitchin/ox-ipynb
