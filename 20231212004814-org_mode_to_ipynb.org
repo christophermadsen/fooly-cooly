@@ -7,3 +7,8 @@
 https://necromuralist.github.io/posts/org-to-jupyter-notebook/
 https://kitchingroup.cheme.cmu.edu/blog/2017/01/21/Exporting-org-mode-to-Jupyter-notebooks/
 https://github.com/jkitchin/ox-ipynb
+
+If we don't use =ipython= source blocks in org, but use base python source
+blocks, for example because we override the base python with jupyter kernels,
+then we need to add a fix provided by jkitchin in a github issue:
+https://github.com/jkitchin/ox-ipynb/issues/13
