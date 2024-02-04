@@ -1,0 +1,29 @@
+:PROPERTIES:
+:ID:       5206fa4e-86b4-4a6b-90ce-ba7de9ba9939
+:END:
+#+title: virtualenv workon on windows
+#+filetags: :system environment variables:terminal:powershell:workon:virtualenv:windows:
+
+To make the =workon= command work for python virtual environments on windows,
+we can add it to our PowerShell profile. Open the profile in notepad with:
+#+begin_src powershell
+notepad $PROFILE
+#+end_src
+
+If it doesn't exist then first create it with:
+#+begin_src powershell
+New-Item -ItemType File -Path $profile -Force
+#+end_src
+
+First we need to add a =WORKON_HOME= system environment variable in windows. Just
+search for that in the windows start menu. Then add a new one with the name
+=WORKON_HOME= and the value should be the directory with your virtual
+environments, for example: =%appdata%/.virtualenvs= We can then add the following
+powershell code to the powershell profile, but make sure that ~WORKON_HOME~ is
+set to where you have your virtual environments. This function will enable the
+=workon= command for activating a venv in Windows more easily.
+#+begin_src powershell
+function workon ($env) {
+        & $env:WORKON_HOME\$env\Scripts\activate.ps1
+}
+#+end_src

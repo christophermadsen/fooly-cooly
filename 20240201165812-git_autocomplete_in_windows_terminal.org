@@ -1,0 +1,33 @@
+:PROPERTIES:
+:ID:       330cce2c-182a-46a8-9a0b-7ef0f864a69c
+:END:
+#+title: Git autocomplete in PowerShell
+#+filetags: :terminal:windows:PowerShell:git:autocomplete
+
+https://www.rodyvansambeek.com/blog/git-autocomplete-powershell-magic
+
+First install the posh-git module.
+#+begin_src powershell
+Install-Module posh-git -Scope CurrentUser
+#+end_src
+
+Then import the module.
+#+begin_src powershell
+Import-Module posh-git
+#+end_src
+
+We can add it to our PowerShell profile to import the module at start up. Open
+the profile in notepad with the following:
+#+begin_src powershell
+notepad $PROFILE
+#+end_src
+
+If it doesn't exist, first create the profile with:
+#+begin_src powershell
+New-Item -ItemType File -Path $profile -Force
+#+end_src
+
+Then add the following line to that file:
+#+begin_src powershell
+Import-Module posh-git
+#+end_src

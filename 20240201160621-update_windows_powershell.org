@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       4ba10502-47bd-4405-ae10-bcc2be8048e3
+:END:
+#+title: Update Windows PowerShell
+#+filetags: :terminal:powershell:windows:
+
+Open a PowerShell instance and run:
+#+begin_src powershell
+winget upgrade Microsoft.PowerShell
+#+end_src
