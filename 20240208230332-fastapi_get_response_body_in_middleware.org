@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       4baedcb1-6093-43c6-bee0-af2f912acd00
+:END:
+#+title: FastAPI get response body in middleware
+#+filetags: :response:middleware:api:python:FastAPI:
+
+https://stackoverflow.com/questions/71882419/fastapi-how-to-get-the-response-body-in-middleware
+
+#+begin_example python
+from starlette.concurrency import iterate_in_threadpool
+
+@app.middleware("http")
+async def some_middleware(request: Request, call_next):
+    response = await call_next(request)
+    response_body = [chunk async for chunk in response.body_iterator]
+    response.body_iterator = iterate_in_threadpool(iter(response_body))
+    print(f"response_body={response_body[0].decode()}")
+    return response
+#+end_example

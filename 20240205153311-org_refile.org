@@ -1,0 +1,10 @@
+:PROPERTIES:
+:ID:       67c657a5-4b4e-4422-a161-cdbada7a08fe
+:END:
+#+title: org-refile
+#+filetags: :report:text:editing:move:section:org-refile:org-mode:
+
+To move one section into another section in org-mode is really easy. We can use
+org-refile (default kbd: C-c C-w) by putting out cursor at the section we want
+to move and calling org-refile, then select the section you want to move it to
+when prompted in the minibuffer.

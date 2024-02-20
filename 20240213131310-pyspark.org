@@ -1,0 +1,49 @@
+:PROPERTIES:
+:ID:       189a7fcd-6a04-4c7f-a8f6-5060e1933df5
+:END:
+#+title: PySpark
+#+filetags: :parallel:python:Spark:cloud:parallel:cluster:
+
+* Introduction to PySpark (datacamp)
+
+Setup:
+https://www.datacamp.com/tutorial/pyspark-tutorial-getting-started-with-pyspark
+
+** What is Spark?
+- Spark is a parallel computing framework for machine clusters in the
+  cloud. You can also run it locally, but it's not what it's built for.
+- You connect to a remote machine, the /master/, that's connected to all the
+  other machines in the cluster, /workers/. (The DataCamp course runs spark on
+  it's own servers in a simulated cluster).
+- PySpark is the Python API for Spark.
+- It may take longer to start computations, there is more overhead, but on
+  large computations (and data), it's much faster.
+
+** Terminology
+- RDD :: Resillient Distributed Dataset. This is the low level object that
+  splits data across multiple nodes in the cluster.
+- Spark DataFrame :: An abstraction of the RDD that is easier to work with.
+
+** First Steps
+=SparkContext= objects makes contact with the cluster and =SparkSession=
+objects are the interfaces of the connection.
+
++ ~SparkSession.sql()~ to run SQL queries (string) and get a DF back.
++ ~SparkDataFrame.toPandas()~ on a Spark DataFrame to get Pandas equivalent.
++ ~SparkSession.createDataFrame()~ to get a Spark DataFrame from a Pandas DF.
+
+#+CAPTION: Flow of data between Spark catalog and local data
+#+NAME:   fig:scope-table
+#+ATTR_HTML: :width 800px
+[[file:figures/spark_figure.png]]
+
+DataFrames are available locally, but to make them available via Spark, we need
+to add a view.
+
++ ~SparkSession.catalog.ListTable()~ to see available tables in the Spark Session
++ ~SparkDataFrame.createOrReplaceTempView(name: str)~ to create view in
+  temporary Spark Session
++ ~SparkDataFrame.show()~ to view data
++ ~SparkSession.read.csv()~ to read a csv file.
+
+** Data Manipulation

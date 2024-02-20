@@ -1,0 +1,40 @@
+:PROPERTIES:
+:ID:       80e916a6-7310-4153-9a44-7ce6f4a53388
+:END:
+#+title: texlive
+#+filetags: :windows:markdown:pandoc:pdf:latex:tex:
+
+With /Pandoc/ and /Texlive/ installed, Pandoc can convert to some really nice
+looking PDF files. On Windows we'll need to install them manually. Using
+chocolatey, the package manager for Windows, is just a really-really nice way
+to do it:
+
+: Pandoc
+#+begin_example powershell
+choco install pandoc
+#+end_example
+
+: Texlive
+#+begin_example powershell
+choco install texlive
+#+end_example
+
+To convert a document to PDF with pandoc we can do:
+#+begin_example powershell
+pandoc path-to-my-file.md -o path-to-my-out-file.pdf
+#+end_example
+
+We may encounter missing dependencies, but we can likely just install these
+with chocolatey and make sure they are on our PATH, or we can use the built-in
+Tex packagemanager =tlmgr= that comes with /Texlive/ in the case of missing tex
+dependencies. I for example got the following error when trying to export a
+Markdown file to PDF:
+#+begin_example
+Error producing PDF.
+! LaTeX Error: File `xcolor.sty' not found.
+#+end_example
+
+I just fixed this by running:
+#+begin_example powershell
+tlmgr install xcolor
+#+end_example

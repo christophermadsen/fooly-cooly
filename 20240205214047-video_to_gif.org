@@ -1,0 +1,19 @@
+:PROPERTIES:
+:ID:       0bd9e6f8-aed5-4c72-8489-a5e89ab53b1b
+:END:
+#+title: video to gif
+#+filetags: :windows:
+
+A neat way of turning a video into a gif on Windows is using the two CLI tools
+=ffmpeg= and =gifski=. Install these tools either through chocolatey or their
+direct websites (just google it).
+
+With PowerShell first use =ffmpeg= to turn a video into images:
+#+begin_src powershell
+ffmpeg -i video.webm frame%04d.png
+#+end_src
+
+Then use =gifski= to convert them into a gif.
+#+begin_src powershell
+gifski -o anim.gif frame*.png
+#+end_src

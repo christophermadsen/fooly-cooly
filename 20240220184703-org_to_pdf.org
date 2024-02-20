@@ -1,0 +1,21 @@
+:PROPERTIES:
+:ID:       1ccfefda-eafc-45bd-a1aa-180d4f9887c7
+:END:
+#+title: org to pdf
+#+filetags: :org:file:pandoc:convert:pdf:org-mode:
+
+=Pandoc= is a really cool tool to use for converting files to other
+types. Together with =Texlive= it really works wonders. Have a look at [[id:80e916a6-7310-4153-9a44-7ce6f4a53388][texlive]]
+for installing the packages with =chocolatey=.
+
+A basic call to Pandoc on the CLI, for making a nice looking PDF (not tested
+with images) from an org file is the following:
+#+begin_example powershell
+pandoc -f org --toc -t pdf path-to-your-in.org -o path-to-your-out.pdf -V 'fontfamily:Nunito' -V 'geometry:margin=1in'
+#+end_example
+
+Using the ~-V~ argument signifies a /variable/, so in this call I define a
+fontfamily and the size of the margin. When you run it it probably will tell
+you Tex dependencies or fonts are missing. Install these with tex package
+manager included in Texlive, =tlmgr=, when the error appears, and run the call
+again.
