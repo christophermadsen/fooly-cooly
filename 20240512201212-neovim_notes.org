@@ -1,0 +1,30 @@
+:PROPERTIES:
+:ID:       2420d0bb-43c0-4151-811e-f4575a500598
+:ROAM_ALIASES: editor windows setup neovim
+:END:
+#+title: Neovim - Notes
+
+
+I've been experimenting with Neovim on Windows. Neovim seems to have a younger
+and fresher community than Emacs and for this reason I decided to give Neovim a
+try to see what this Vim vs Emacs war is all about anyways.
+
+* Installation
+This was really easy using [[https://scoop.sh/][scoop]] with:
+#+begin_example powershell
+scoop install neovim
+#+end_example
+
+And because my goal has been to use either the [[https://www.lazyvim.org/][Lazyvim distro]] of Neovim or the
+[[https://github.com/nvim-lua/kickstart.nvim][kickstart.nvim]] config (Kickstart uses [[https://github.com/folke/lazy.nvim][lazy.nvim]], Lazyvim's package manager), I
+followed Kickstart's installation recipe and did:
+#+begin_example powershell
+scoop install neovim git ripgrep wget fd unzip gzip mingw make
+#+end_example
+
+* Configuration
+** Encoding
+Running ~:checkhealth~ in Neovim showed that I had an error with my locale. I
+was able to fix that by ticking the =Beta: Use Unicode UTF-8 for worldwide
+language support= box in Control Panel > Clock and Region > Administrative >
+Change system locale...

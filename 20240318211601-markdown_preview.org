@@ -1,0 +1,37 @@
+:PROPERTIES:
+:ID:       2b317302-795d-47be-a3c3-41ce33ca76fb
+:END:
+#+title: markdown preview
+#+filetags: :view:preview:localhost:markdown:
+
+I found 2 tools that make it easier to write markdown in editors that don't
+have a preview.
+
+* Markdown-viewer
+The first one is the =markdown-viewer= extension for Chrome (and many other
+browsers for that matter). Just install it and follow the setup then you can
+immediately view markdown in different flavours in Chrome. Here's a Link to
+their github: https://github.com/simov/markdown-viewer. I really like this
+extension because it also has an =autoreload= option.
+
+* Grip
+The other option is using =grip= which can run a live dev server on a local
+port that updates automatically when you make changes. Just use =pip= to
+install it in the shell:
+
+#+begin_example powershell
+pip install grip
+#+end_example
+
+Then just ~cd~ to the directory where the markdown file is and do:
+
+#+begin_example powershell
+grip --user=MY_GITHUB_USERNAME --pass=MY_GITHUB_PASSWORD -b
+#+end_example
+
+It will run on a localhost that you can view in your browser, for example:
+http://localhost:6419, the ~-b~ flag opens your browser. If you don't provide
+your username and password you will be limited to 60 requests/hour. However,
+when I edited a markdown file for about 1.5 hours, I still reached a limit.
+
+

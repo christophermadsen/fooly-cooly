@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       4800553d-128e-467b-91cb-f3bb2e727c16
+:END:
+#+title: windows copy program path
+#+filetags: :terminal:path:copy:windows:
+
+In Windows Terminal / PowerShell the following command will copy the path of a
+program to the clipboard.
+
+#+begin_src powershell
+Get-Command <your-chosen-program> | Select-Object -ExpandProperty Source
+#+end_src
+
+For example for Python:
+#+begin_src powershell
+Get-Command python | Select-Object -ExpandProperty Source
+#+end_src

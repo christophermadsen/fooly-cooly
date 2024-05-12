@@ -1,7 +1,7 @@
 :PROPERTIES:
 :ID:       80e916a6-7310-4153-9a44-7ce6f4a53388
 :END:
-#+title: texlive
+#+title: texlive / markdown to pdf
 #+filetags: :windows:markdown:pandoc:pdf:latex:tex:
 
 With /Pandoc/ and /Texlive/ installed, Pandoc can convert to some really nice

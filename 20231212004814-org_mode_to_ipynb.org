@@ -4,6 +4,7 @@
 #+title: org mode to ipynb
 #+filetags: :export:ipynb:org-mode:jupyter:
 
+* ox-ipynb
 https://necromuralist.github.io/posts/org-to-jupyter-notebook/
 https://kitchingroup.cheme.cmu.edu/blog/2017/01/21/Exporting-org-mode-to-Jupyter-notebooks/
 https://github.com/jkitchin/ox-ipynb
@@ -12,3 +13,8 @@ If we don't use =ipython= source blocks in org, but use base python source
 blocks, for example because we override the base python with jupyter kernels,
 then we need to add a fix provided by jkitchin in a github issue:
 https://github.com/jkitchin/ox-ipynb/issues/13
+
+* ox-gfm and notedown
+First use [[https://github.com/larstvei/ox-gfm][ox-gfm]] to export the org-mdoe file to a github-flavoured markdown
+(GFM), then export that GFM file to a Jupyter Notebook with [[https://pypi.org/project/notedown/][notedown]]. It works
+like a charm and produces beautiful results.

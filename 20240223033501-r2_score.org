@@ -1,0 +1,12 @@
+:PROPERTIES:
+:ID:       a15d1c64-355c-4caa-a81d-2e13ca109e1f
+:END:
+#+title: r2-score
+#+filetags: :evaluation:ml:machine learning:metric:
+
+A simple explanation of the /r2-score/: It's a metric which tells you *how close*
+your prediction is to the truth. Also called the /coefficient of
+determination/. The best possible score is *1.0*, which are perfect predictions,
+where *0.0* are all imperfect predictions.
+
+Thanks to https://stackoverflow.com/questions/51636330/classification-report-for-regression-sklearn
