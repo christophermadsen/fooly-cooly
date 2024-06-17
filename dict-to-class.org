@@ -1,4 +1,8 @@
+:PROPERTIES:
+:ID:       301d6008-6bef-4976-a477-583ec6bb36ef
+:END:
 #+TITLE: From a Dictionary to a Class
+#+filetags: :class:dictionary:python:
 #+OPTIONS: num:nil
 #+PROPERTY: header-args:python :session dtc :results value verbatim :exports both
 

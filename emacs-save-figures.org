@@ -1,9 +1,13 @@
+:PROPERTIES:
+:ID:       370c63a9-83e0-49e4-bf2b-3b2f1d922c33
+:END:
 #+TITLE: How to Easily Handle a Shared Figure Directory in Emacs + Python
+#+filetags: :path:python:figure:emacs:
 #+AUTHOR: Christopher Buch Madsen | Machine Learning Programs
 #+EMAIL: christopher.madsen@mlprograms.com
 #+DATE: Thursday, 2 February 2023
 #+STARTUP: showall
-#+PROPERTY: header-args :exports both :session figdir :kernel ogi_products :cache no
+#+PROPERTY: header-args :exports both :session figdir :kernel python :cache no
 :PROPERTIES:
 #+OPTIONS: ^:nil
 #+LATEX_COMPILER: xelatex
@@ -33,7 +37,7 @@ on =~/scratch=.
 :visibility: folded
 :END:
 
-#+begin_src python :results silent
+#+begin_src python :results silent :eval no
 from pathlib import Path
 import matplotlib.pyplot as plt
 #+end_src
@@ -46,7 +50,7 @@ We first make an emacs-lisp codeblock print an output, which should be the
 string of the path we want to use.
 
 #+name: figuredir
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :eval no
 (print "~/scratch/chris/figures")
 #+end_src
 
@@ -56,7 +60,7 @@ string of the path we want to use.
 In emacs-lisp we can then ask to retrieve the output of this codeblock and use
 it in Python. Please see the header of the codeblock below.
 
-#+begin_src python :var path=(org-sbe figuredir)
+#+begin_src python :var path=(org-sbe figuredir) :eval no
 FIGURE_DIR = Path(path).expanduser()
 print(FIGURE_DIR)
 #+end_src
@@ -70,7 +74,7 @@ figure in Python and then link to the figure with
 ~[[file:path/to/your/figure.png]]~ for people to be able to view the figure
 without generating it.
 
-#+begin_src python :file (format "%s/checkblockresult.png" (org-sbe figuredir))
+#+begin_src python :file (format "%s/checkblockresult.png" (org-sbe figuredir)) :eval no
 fig, ax = plt.subplots(1, 1, figsize=(7, 7))
 ax.plot([1, 2, 3, 3, 4, 5, 5, 6])
 plt.show()
@@ -87,7 +91,7 @@ To circumvent duplicate paths we can circumvent this with an extra emacs-lisp
 codeblock.
 
 #+name: datadir
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :eval no
 (print "~/scratch/chris")
 #+end_src
 
@@ -95,14 +99,14 @@ codeblock.
 : ~/scratch/chris
 
 #+name: figuredirB
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :eval no
 (print (format "%s/figures" (org-sbe datadir)))
 #+end_src
 
 #+RESULTS: figuredirB
 : ~/scratch/chris/figures
 
-#+begin_src python :var path1=(org-sbe datadir) :var path2=(org-sbe figuredirB)
+#+begin_src python :var path1=(org-sbe datadir) :var path2=(org-sbe figuredirB) :eval no
 DATA_DIR = Path(path1).expanduser()
 FIGURE_DIR = Path(path2).expanduser()
 print(DATA_DIR)
@@ -113,7 +117,7 @@ print(FIGURE_DIR)
 : /home/chris/scratch/chris
 : /home/chris/scratch/chris/figures
 
-#+begin_src python :file (format "%s/checkblockresult2.png" (org-sbe figuredirB))
+#+begin_src python :file (format "%s/checkblockresult2.png" (org-sbe figuredirB)) :eval no
 fig, ax = plt.subplots(1, 1, figsize=(7, 7))
 ax.plot([6, 5, 5, 4, 3, 3, 2, 1])
 plt.show()

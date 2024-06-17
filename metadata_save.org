@@ -1,3 +1,13 @@
+:PROPERTIES:
+:ID:       222a6fea-2fc1-45f4-ad6a-e15c98a25dc6
+:END:
+#+title: Saving Metadata JSON with Pandas Parquet File
+#+filetags: :versioning:metadata:DataFrame:python:
+
+A simple way of saving the parquet metadata alongside the parquet file, through
+Pandas, for a extremely simple version control of the metadata of a dataset.
+
+#+begin_src python :eval no
 import json
 from datetime import datetime
 from pathlib import Path
@@ -34,6 +44,7 @@ def df_to_parquet(df: pd.DataFrame, path: Union[str, Path], **kwargs) -> None:
     new_meta["serialized_size"] = metadata["serialized_size"]
     new_meta["total_byte_size"] = metadata["row_groups"][0]["total_byte_size"]
     new_meta["data"] = []
+    
     for info in metadata["row_groups"][0]["columns"]:
         feature = info["path_in_schema"]
         if feature == "index":
@@ -50,14 +61,7 @@ def df_to_parquet(df: pd.DataFrame, path: Union[str, Path], **kwargs) -> None:
         feature_md["total_compressed_size"] = info["total_compressed_size"]
         feature_md["total_uncompressed_size"] = info["total_uncompressed_size"]
         new_meta["data"].append(feature_md)
+        
     with open(metadata_path, "w") as file:
         json.dump(new_meta, file, indent=4, default=str)
-
-
-# if __name__ == "__main__":
-#     path = (
-#         "/home/chris/scratch/ogi/datasets/mlp_score/"
-#         "ogi_cp_20220809_165454/dataset.parquet"
-#     )
-#     df = pd.read_parquet(path)
-#     df_to_parquet(df, "~/test_dataset.parquet", compression="zstd")
+#+end_src

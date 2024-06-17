@@ -2,7 +2,7 @@
 :ID:       fe1e542a-1c39-4118-9aee-3ca879827b13
 :END:
 #+TITLE: Helpful, Ongoing Notes for Emacs and Org-mode
-#+filetags: :org-mode:emacs:
+#+filetags: :miscellaneous:org-mode:emacs:
 #+STARTUP: show2levels
 
 * Introduction
