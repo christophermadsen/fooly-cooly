@@ -45,5 +45,3 @@ to add a view.
   temporary Spark Session
 + ~SparkDataFrame.show()~ to view data
 + ~SparkSession.read.csv()~ to read a csv file.
-
-** Data Manipulation

@@ -1,21 +1,24 @@
 :PROPERTIES:
 :ID:       fe1e542a-1c39-4118-9aee-3ca879827b13
 :END:
-#+TITLE: Helpful, Ongoing Notes for Emacs and Org-mode
+#+TITLE: Miscellaneous Emacs Notes
 #+filetags: :miscellaneous:org-mode:emacs:
 #+STARTUP: show2levels
 
-* Introduction
-This is a simple narrative for my ongoing notes on Emacs and Org-mode things.
-
 * Keybindings
-*General Keybinds*
-+ ~C-u M-x vterm~ for opening a new instance of *vterm*
-+ ~C-c C-t~ edit mode in *Vterm*
-+ ~C-x :~ for the MLP report template (setup-report-reset-buffer), likely
-  custom.
+** Agenda
++ ~C-c a~ to open org-agenda (org-agenda)
++ ~C-c [~ to add current narrative and its org-agenda syntax to org-agenda
+  (org-agenda-file-to-front)
++ ~C-c C-t~ for task status in org-mode headers (org-todo)
++ ~C-c ,~ for task priority in org-mode headers (org-priority)
++ ~C-c .~ for adding a datetime stamp (org-time-stamp). Write an hour like
+  HH:MM for a time stamp, HH:MM-HH:MM for a time range or HH:MM+H for an
+  quicker range. Examples: 14:00, 14:00-14:30, 14:30+1. Use
+  ~shift-up/down/right/left~ to navigate in the org-agenda calendar.
++ ~C-c C-z~ to add a note to a TODO (add-org-note)
 
-*Layout/display*
+** Layout/display
 + ~C-c C-x C-v~ for toggling display of in-line images
   (org-toggle-inline-images)
 + ~C-c m~ to hide org highlight syntax and just show highlight
@@ -23,14 +26,7 @@ This is a simple narrative for my ongoing notes on Emacs and Org-mode things.
 + ~C-x 8 RET~ to insert a special character (insert-char)
   ~C-x 8 'a~ for á like in Breanndán
 
-*Agenda*
-+ ~C-c [~ to add current narrative and its Org-agenda syntax to Org-agenda
-  (org-agenda-file-to-front)
-+ ~C-c~ for org-agenda options (org-agenda)
-+ ~C-c C-t~ for task status in org-mode headers (org-todo)
-+ ~C-c ,~ for task priority in org-mode headers (org-priority)
-
-*Org-babel src block keybinds*
+** Org-babel src block keybinds
 + ~C-c C-c~ to execute a src block
 + ~C-c C-v C-b~ to execute all src blocks in buffer/narrative (org-babel-execute-buffer)
 + ~C-c C-v t~ to tangle a json src block to a .json file (org-bable-tangle):

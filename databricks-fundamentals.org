@@ -1,0 +1,93 @@
+:PROPERTIES:
+:ID:       b19a36b1-9616-469f-93c7-adc49a671459
+:END:
+#+TITLE: Databricks Fundamentals
+#+filetags: :delta lake:learning:fundamentals:databricks:
+#+AUTHOR: Christopher Buch Madsen
+#+EMAIL: christopher.madsen@mews.com
+#+DATE: Tuesday, 25 June 2024
+#+STARTUP: showall
+
+* Introduction
+
+Notes for the Databricks Fundamentals free online course.
+https://customer-academy.databricks.com/learn/course/2206/databricks-fundamentals
+
+* Notes
+
++ Data Warehouses were designed to use structured data for BI.
++ Data Lakes stores semi and unstructured data. Texts, audio, video, images.
++ Data Lakehouse support use cases for both structured and unstructured data.
+
++ If a business wants to work with many different types of data, likely they
+  will need a data lake.
+
++ A data swamp is a data lake where the data isn't used in projects.
+
++ The Databricks Data Intelligence layer uses Generative AI to uderstand the
+  semantics of the data in the data lake.
+  
+  [[file:figures/data-intelligence-engine-topology.png]]
+
++ Project Genie allows to ask questions about the data with natural language.
+
++ [[https://docs.databricks.com/en/delta/index.html#what-is-delta-lake][What is Delta Lake?]]
+  #+begin_quote
+  Delta Lake is the optimized storage layer that provides the foundation for
+  tables in a lakehouse on Databricks. Delta Lake is open source software that
+  extends Parquet data files with a file-based transaction log for ACID
+  transactions and scalable metadata handling. Delta Lake is fully compatible
+  with Apache Spark APIs, and was developed for tight integration with
+  Structured Streaming, allowing you to easily use a single copy of data for
+  both batch and streaming operations and providing incremental processing at
+  scale.
+
+  Delta Lake is the default format for all operations on Databricks. Unless
+  otherwise specified, all tables on Databricks are Delta tables. Databricks
+  originally developed the Delta Lake protocol and continues to actively
+  contribute to the open source project. Many of the optimizations and products
+  in the Databricks platform build upon the guarantees provided by Apache Spark
+  and Delta Lake. For information on optimizations on Databricks, see
+  Optimization recommendations on Databricks.
+  #+end_quote
+
++ With Databricks you aren't limited to a single cloud provider.
+
++ The Unity Catalog is the centralized tool on Databricks for controlling data
+  governance.
+
++ Delta Share allows for sharing data within the data governance rules.
+
++ Databricks Marketplace allows for sharing datasets, notebooks and models with
+  the community.
+
++ [[https://learn.microsoft.com/en-us/azure/databricks/compute/photon#--what-is-photon-used-for][What is Photon used for?]]
+  #+begin_quote
+  Photon is a high-performance Azure Databricks-native vectorized query engine
+  that runs your SQL workloads and DataFrame API calls faster to reduce your
+  total cost per workload.
+
+  The following are key features and advantages of using Photon.
+
+  Support for SQL and equivalent DataFrame operations with Delta and Parquet
+  tables.  Accelerated queries that process data faster and include
+  aggregations and joins.  Faster performance when data is accessed repeatedly
+  from the disk cache.  Robust scan performance on tables with many columns and
+  many small files.  Faster Delta and Parquet writing using UPDATE, DELETE,
+  MERGE INTO, INSERT, and CREATE TABLE AS SELECT, including wide tables that
+  contain thousands of columns.  Replaces sort-merge joins with hash-joins.
+  For AI and ML workloads, Photon improves performance for applications using
+  Spark SQL, Spark DataFrames, feature engineering, GraphFrames, and xgboost4j.
+  #+end_quote
+
++ Databricks Orchestration is useful in data pipelines for automatic resource
+  allocation, auto checkpointing and recovery, and auto monitoring.
+
++ Delta Live Tables (DLT) is useful for building ETL pipelines.
+
+  [[file:figures/ETL-databricks.png]]
+
++ Databricks AI support end-to-end AI products
+
+  #+ATTR_ORG: :width 900px
+  [[file:figures/databricks-ai-capabilities.png]]

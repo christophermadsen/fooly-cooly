@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       d880ed65-abcd-4709-a794-f72cc5da3c10
+:END:
+#+title: Databricks Machine Learning Practitioner Learning Path
+#+filetags: :databricks:machine_learning:
+
+* Introduction
+
+Notes for the /Machine Learning Practitioner/ learning path on the Databricks
+academy.
+
+[[https://customer-academy.databricks.com/learn/lp/11/machine-learning-practitioner-learning-plan][Link to the learning plan on the databricks academy site for customers]]
+
+[[file:figures/ml-practitioner-lp-modules.png]]
+
+* Machine Learning with Databricks (Module 1)
+** Managing and Exploring Data
++ Data Engineering, Data Analysis and Machine Learning on a single platform,
+  the /Data Intelligence Platform/.
++ Data Science & AI, rebranded as *Mosaic AI*, includes everything you need
+  end-to-end for AI projects.
++ Collaborative Notebooks
++ Databricks has most of the Data and ML related packages you need
+  preinstalled.

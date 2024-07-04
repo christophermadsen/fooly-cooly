@@ -2,7 +2,7 @@
 :ID:       417fd894-f045-44dd-b09f-81b42bd77fac
 :END:
 #+title: Symbolic Link PowerShell
-#+filetags: :symbolic link:powershell:
+#+filetags: :symlink:powershell:
 
 #+begin_src shell
 New-Item -Path "C:\Path\To\Add\Dir" -ItemType SymbolicLink -Target "D:\Path\To\Link\Dir"

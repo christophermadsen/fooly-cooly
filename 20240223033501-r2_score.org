@@ -2,7 +2,7 @@
 :ID:       a15d1c64-355c-4caa-a81d-2e13ca109e1f
 :END:
 #+title: r2-score
-#+filetags: :evaluation:ml:machine learning:metric:
+#+filetags: :evaluation:ml:machine_learning:metric:
 
 A simple explanation of the /r2-score/: It's a metric which tells you *how close*
 your prediction is to the truth. Also called the /coefficient of

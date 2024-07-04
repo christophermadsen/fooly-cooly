@@ -1,0 +1,34 @@
+:PROPERTIES:
+:ID:       5b5482dd-2283-4518-bca3-f4d827344acb
+:END:
+#+title: Clothes Shopping
+#+filetags: :links:webshop:clothes:shopping:
+
+* Shopping!
+These are the clothing lines and shops that are like.
+
+** Brands/Lines
++ [[https://www.edwin-europe.com/][EDWIN]] - Japanese (Denim) brand. Always has incredible collabs, and the
+  quality of their material is fantastic.
++ [[https://www.pullandbear.com/][PULL&BEAR]] - Frequently has new editorials and the item are good quality for
+  the price. However, many of the items have over-generic fits. They have some
+  cool collabs.
++ [[https://www.elementbrand.nl/heren-kleding][Element]] - Nice skate and streetwear, a little pricey and not
+  everything is good quality. They have some cool collabs.
++ [[https://www.sissy-boy.com/heren/][Sissy Boy]] - High street clothing and accessories.
+
+** Retailers/Stores
++ [[https://www.zalando.nl/herenkleding][Zalando]] - Has a large selection from cheap to expensive and the customer
+  service is great. It's a good site to discover brands. Some brands to watch
+  out for:
+  - EDWIN
+  - PULL&BEAR
+  - Element
+  - Karl Kani
+  - Volcom
+  - Vans
+  - Desigual
+  - Koroshi
+  - Sissy Boy
++ [[https://www.blackfish.nl/][Blackfish]] - Vintage clothing store in Utrecht with a nice
+  online shop.
