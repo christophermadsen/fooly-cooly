@@ -1,0 +1,140 @@
+:PROPERTIES:
+:ID:       f5ccae8c-c8ba-45c0-99ac-37d43abc1fd9
+:END:
+#+title: Emacs Keybindings for Azure Databricks
+#+filetags: :tampermonkey:javascript:databricks:keybindings:
+
+I got tired of navigating around with the mouse and weirdly positioned keys
+like =end= so I had ChatGPT generate me a little JS script to use with
+[[https://www.tampermonkey.net/][Tampermonkey]].
+
+It works okay-ish, but there are some caveats:
+- ~C-j~ instead of ~C-n~ for going down because browsers have blacklisted
+  changes to ~C-n~ (open new tab in new window).
+- Positioning after using ~C-j~ and ~C-p~ isn't stored, so where they end up is
+  pretty random, but it sure beats using arrow keys.
+- ~M-f~ and ~M-b~ for word jumping doesn't work perfectly, for example, it
+  thinks ~Prompty.load(source="path/to/prompty.prompty")~ is one word.
+
+#+begin_src javascript
+// ==UserScript==
+// @name         Emacs Keybindings for Azure Databricks
+// @namespace    http://tampermonkey.net/
+// @version      1.0
+// @description  Add Emacs keybindings to Databricks notebooks
+// @author       You
+// @match        https://*.azuredatabricks.net/*
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    // Function to move cursor to the beginning of the current word
+    function moveToWordStart(text, pos) {
+        while (pos > 0 && /\s/.test(text.charAt(pos - 1))) {
+            pos--;
+        }
+        while (pos > 0 && !/\s/.test(text.charAt(pos - 1))) {
+            pos--;
+        }
+        return pos;
+    }
+
+    // Function to move cursor to the end of the current word
+    function moveToWordEnd(text, pos) {
+        while (pos < text.length && /\s/.test(text.charAt(pos))) {
+            pos++;
+        }
+        while (pos < text.length && !/\s/.test(text.charAt(pos))) {
+            pos++;
+        }
+        return pos;
+    }
+
+    // Function to move the cursor up by one line
+    function moveCursorUp(element) {
+        const lines = element.value.substr(0, element.selectionStart).split("\n");
+        const currentLine = lines.length - 1;
+        if (currentLine > 0) {
+            const currentColumn = lines[currentLine].length;
+            const previousLineLength = lines[currentLine - 1].length;
+            const newPos = element.selectionStart - (currentColumn + 1) - Math.min(previousLineLength, currentColumn);
+            element.setSelectionRange(newPos, newPos);
+        }
+    }
+
+    // Function to move the cursor down by one line
+    function moveCursorDown(element) {
+        const cursorPos = element.selectionStart;
+        const textAfterCursor = element.value.substring(cursorPos);
+        const cursorLineIndex = element.value.substring(0, cursorPos).split('\n').length - 1;
+        const lines = element.value.split('\n');
+
+        if (cursorLineIndex < lines.length - 1) {
+            const nextLine = lines[cursorLineIndex + 1];
+            const nextLineLength = nextLine.length;
+            const currentColumn = cursorPos - element.value.substring(0, cursorPos).lastIndexOf('\n') - 1;
+            const newPos = element.value.indexOf('\n', cursorPos) + 1 + Math.min(currentColumn, nextLineLength);
+
+            element.setSelectionRange(newPos, newPos);
+        }
+    }
+
+    // Function to override default key behavior
+    function overrideKeyBindings(event) {
+        var activeElement = document.activeElement;
+        if (activeElement.tagName === 'TEXTAREA' || activeElement.tagName === 'INPUT' || activeElement.isContentEditable) {
+            if (event.ctrlKey && event.key === 'b') { // Ctrl + B: move left
+                if (activeElement.selectionStart > 0) {
+                    activeElement.setSelectionRange(activeElement.selectionStart - 1, activeElement.selectionStart - 1);
+                }
+                event.preventDefault();
+                event.stopPropagation();
+            } else if (event.ctrlKey && event.key === 'f') { // Ctrl + F: move right
+                if (activeElement.selectionStart < activeElement.value.length) {
+                    activeElement.setSelectionRange(activeElement.selectionStart + 1, activeElement.selectionStart + 1);
+                }
+                event.preventDefault();
+                event.stopPropagation();
+            } else if (event.ctrlKey && event.key === 'j') { // Ctrl + N: move down
+                moveCursorDown(activeElement);
+                event.preventDefault();
+                event.stopPropagation();
+            } else if (event.ctrlKey && event.key === 'p') { // Ctrl + P: move up
+                moveCursorUp(activeElement);
+                event.preventDefault();
+                event.stopPropagation();
+            } else if (event.ctrlKey && event.key === 'a') { // Ctrl + A: move to beginning of line
+                const cursorPos = activeElement.selectionStart;
+                const textBeforeCursor = activeElement.value.substring(0, cursorPos);
+                const startOfLine = textBeforeCursor.lastIndexOf('\n') + 1;
+                activeElement.setSelectionRange(startOfLine, startOfLine);
+                event.preventDefault();
+                event.stopPropagation();
+            } else if (event.ctrlKey && event.key === 'e') { // Ctrl + E: move to end of line
+                const cursorPos = activeElement.selectionStart;
+                const textAfterCursor = activeElement.value.substring(cursorPos);
+                const endOfLine = activeElement.value.indexOf('\n', cursorPos);
+                const lineEndPos = endOfLine === -1 ? activeElement.value.length : endOfLine;
+                activeElement.setSelectionRange(lineEndPos, lineEndPos);
+                event.preventDefault();
+                event.stopPropagation();
+            } else if (event.altKey && event.key === 'b') { // Alt + B: move to start of word
+                let newPos = moveToWordStart(activeElement.value, activeElement.selectionStart);
+                activeElement.setSelectionRange(newPos, newPos);
+                event.preventDefault();
+                event.stopPropagation();
+            } else if (event.altKey && event.key === 'f') { // Alt + F: move to end of word
+                let newPos = moveToWordEnd(activeElement.value, activeElement.selectionStart);
+                activeElement.setSelectionRange(newPos, newPos);
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        }
+    }
+
+    // Add event listener for keydown with capture phase set to true
+    document.addEventListener('keydown', overrideKeyBindings, true);
+})();
+#+end_src

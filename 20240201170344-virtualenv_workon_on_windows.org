@@ -24,6 +24,10 @@ set to where you have your virtual environments. This function will enable the
 =workon= command for activating a venv in Windows more easily.
 #+begin_src powershell
 function workon ($env) {
-        & $env:WORKON_HOME\$env\Scripts\activate.ps1
+    if ($env) {
+        & "$env:WORKON_HOME\$env\Scripts\activate.ps1"
+    } else {
+        Get-ChildItem -Directory $env:WORKON_HOME | ForEach-Object { $_.Name }
+    }
 }
 #+end_src
