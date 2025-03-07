@@ -1,0 +1,7 @@
+:PROPERTIES:
+:ID:       3040cd4c-cbd4-44bb-be99-ba8e81d51e66
+:END:
+#+title: Data Visualisation
+
+- [[https://nrennie.rbind.io/blog/monochrome-data-visualisations/?utm_campaign=Data_Elixir&utm_source=Data_Elixir_522][Designing monochrome data visualisations]]
+- [[https://medium.com/%40aorrao/using-monochromatic-color-schemes-for-effective-data-visualization-8e24cd8fe6a9][Using Monochromatic Color Schemes for Effective Data Visualisation]]

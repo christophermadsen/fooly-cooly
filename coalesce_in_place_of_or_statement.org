@@ -1,0 +1,24 @@
+:PROPERTIES:
+:ID:       3993605d-5062-49b8-a027-742809068782
+:END:
+#+TITLE: COALESCE in place of OR statement
+#+filetags: :optimize:boolean:structured_query_language:SQL:
+#+AUTHOR: Christopher Buch Madsen
+#+EMAIL: christopher.madsen@mews.com
+#+DATE: 2025-03-07
+#+STARTUP: showall
+
+Consider using COALESCE
+#+begin_src sql
+COALESCE(service.IsDeleted, FALSE) = FALSE
+#+end_src
+
+In place of OR statements
+#+begin_src sql
+(service.IsDeleted IS NULL OR service.IsDeleted = FALSE)
+#+end_src
+
+~COALESCE~ chooses the first non-NULL value in the inout. In the example I use
+COALESCE's result to compare with =False=. So, if ~service.IsDeleted~ is =True=
+then =True= is chosen by ~COALESCE~, otherwise =False= is chosen. Finally, we
+compare the ~COALESCE~ result with =False=.

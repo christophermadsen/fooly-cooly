@@ -2,7 +2,7 @@
 :ID:       9d27a9b2-6e65-414a-9b12-216e6c78dec6
 :END:
 #+TITLE: SQL and Relational Databases
-#+filetags: :structured query language:SQL:relational databases:
+#+filetags: :structured_query_language:SQL:relational_databases:
 #+STARTUP: show2levels
 
 * Introduction

@@ -7,3 +7,5 @@
 #+begin_src shell
 New-Item -Path "C:\Path\To\Add\Dir" -ItemType SymbolicLink -Target "D:\Path\To\Link\Dir"
 #+end_src
+
+It's a bit iffy, so it seems the path syntax with backslashes is important.
