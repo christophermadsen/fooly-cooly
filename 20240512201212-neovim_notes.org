@@ -23,8 +23,14 @@ scoop install neovim git ripgrep wget fd unzip gzip mingw make
 #+end_example
 
 * Configuration
-** Encoding
+** Encoding (General)
 Running ~:checkhealth~ in Neovim showed that I had an error with my locale. I
 was able to fix that by ticking the =Beta: Use Unicode UTF-8 for worldwide
 language support= box in Control Panel > Clock and Region > Administrative >
 Change system locale...
+
+** Gitsigns (Plugin)
+The =Gitsigns= pluging would give me the error ~Error: Buffer not attached~
+which I was able to fix by simply updating *git*. It was only a minor version,
+command was quite surprising. If nothing shows up in the signcolumn try the
+command: ~:Gitsigns toggle_signs~.
